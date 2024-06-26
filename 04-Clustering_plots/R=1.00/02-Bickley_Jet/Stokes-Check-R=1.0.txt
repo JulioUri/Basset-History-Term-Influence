@@ -1,0 +1,17 @@
+Average and maximum difference of trajectories calculated with Leap Frog method and Solve_Ivp method for the Bickley Jet with parameters, R = 1 and
+
+ - S = 0.01:
+    - Average = 0.0014722219108979403,
+    - Maximum difference = 1.1062080876116376.
+
+ - S = 0.1:
+    - Average = 0.0025040085200746056,
+    - Maximum difference = 1.4925996943566227.
+
+ - S = 1.0:
+    - Average = 0.0029063998853533393,
+    - Maximum difference = 3.875589606213761.
+
+ - S = 10.0:
+    - Average = 0.3623027373499963,
+    - Maximum difference = 18.452416690685627.
