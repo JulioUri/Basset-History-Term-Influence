@@ -62,6 +62,8 @@ This repository is a result of the work carried out by
 
 <p align="center">
   <img src="./Logos/tuhh-logo.png" height="55"/> &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="./Logos/leuphana_logo.svg" height="55"/> &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="./Logos/HAW_Marke_weiss_RGB.svg" height="55"/> &nbsp;&nbsp;&nbsp;&nbsp;
 </p>
 
 This project is funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) - SFB 1615 - 503850735.
