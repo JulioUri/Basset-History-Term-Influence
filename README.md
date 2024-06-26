@@ -58,7 +58,7 @@ Each .py file is made up of a code with the following structure *z99_AAAAAA_BBBB
 ## Acknowledgements
 
 This repository is a result of the work carried out by 
-[ M. Sc. Julio URIZARNA-CARASA](https://www.mat.tuhh.de/home/jurizarna_en), [Prof. Dr. Daniel RUPRECHT](https://www.mat.tuhh.de/home/druprecht/?homepage_id=druprecht), from Hamburg University of Technology, [Prof. Dr. Alexandra von Kameke](https://www.haw-hamburg.de/hochschule/beschaeftigte/detail/person/person/show/alexandra-von-kameke/) and [Prof. Dr. Kathrin Padberg-Gehle](https://www.leuphana.de/institute/imd/personen/kathrin-padberg-gehle.html).
+[ M. Sc. Julio URIZARNA-CARASA](https://www.mat.tuhh.de/home/jurizarna_en), [Prof. Dr. Daniel RUPRECHT](https://www.mat.tuhh.de/home/druprecht/?homepage_id=druprecht), from Hamburg University of Technology as well as [Prof. Dr. Alexandra von Kameke](https://www.haw-hamburg.de/hochschule/beschaeftigte/detail/person/person/show/alexandra-von-kameke/) from the Hamburg University of Applied Sciences and [Prof. Dr. Kathrin Padberg-Gehle](https://www.leuphana.de/institute/imd/personen/kathrin-padberg-gehle.html) from the Leuphana Universität Lüneburg.
 
 <p align="center">
   <img src="./Logos/tuhh-logo.png" height="55"/> &nbsp;&nbsp;&nbsp;&nbsp;
