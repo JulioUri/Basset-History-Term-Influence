@@ -55,6 +55,8 @@ Each .py file is made up of a code with the following structure *z99_AAAAAA_BBBB
  - STOKS holds solvers appliied on the Maxey-Riley equation with History term,
  - IMEX4 holds the solver with either the 1st, 2nd, 3rd and 4th order IMEX.
 
+More info in the following [link](https://arxiv.org/abs/2403.13515).
+
 ## Acknowledgements
 
 This repository is a result of the work carried out by 
