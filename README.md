@@ -1,5 +1,7 @@
 # Code repository for the paper _Relevance of the Basset history term for Lagrangian particle dynamics_
 
+[![DOI](https://zenodo.org/badge/820629963.svg)](https://zenodo.org/doi/10.5281/zenodo.12557889)
+
 This repository contains the Python scripts implemented for the development of the paper _Relevance of the Basset history term for Lagrangian particle dynamics_.
 
 Here one can therefore find the scripts that generate the figures and tables in the following publication:
