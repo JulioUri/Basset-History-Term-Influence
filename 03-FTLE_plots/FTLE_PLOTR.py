@@ -18,9 +18,9 @@ from subprocess import call
 
 # Decide which value of R is used:
 ## R=7/9;   R=1;   R=11/9
-R_folder = np.array(["/R=0.78", "/R=1.00", "/R=1.22"])
+R_folder = np.array(["/R=0.78", "/R=1.22"])
 
-R_v      = np.array(["0.78", "1.0", "1.22"])
+R_v      = np.array(["0.78", "1.22"])
 
 # Decide which field flow is used:
 ## 1: Double Gyre;   3: Bickley Jet;   4: Faraday Flow
@@ -50,26 +50,34 @@ zmax_Bkly = np.load("../02-FTLE_data/zmax_Bkly.npy")
 zmin_Frdy = np.load("../02-FTLE_data/zmin_Frdy.npy")
 zmax_Frdy = np.load("../02-FTLE_data/zmax_Frdy.npy")
 
+
+
 ###############################
 # Start FTLE plotting process #
 ###############################
 
 count = 0
+# Loop over folders with different R values
 for k in range(0, len(R_folder)):
     
-    # Loop over folders with different R values
+    # Print in console the values of R for which we are currently
+    # plotting the data
     if R_folder[k] == "/R=0.78":
         print("1.- Plotting FTLEs for R = 0.78.")
-        
-    elif R_folder[k] == "/R=1.00":
-        print("2.- Plotting FTLEs for R = 1.00")
         
     elif R_folder[k] == "/R=1.22":
         print("3.- Plotting FTLEs for R = 1.22.")
     
+    
+    
     # Loop over field folders
     for i in range(0, len(Flowfield_folder)):
         
+        # Import shrink_scale for a more proportionate bar in the colormap.
+        # Import min and max FTLE values so it is constant among FTLE plots
+        # of the same field.
+        # Print on the console the name of the field for which we are
+        # currently calculating data.
         if Flowfield_folder[i] == "/01-Double_Gyre/":
             shrink_scale = 0.5
             zmin = zmin_Gyre
@@ -88,14 +96,22 @@ for k in range(0, len(R_folder)):
             zmax = zmax_Frdy
             print("      - Faraday Flow.")
         
+        
+        
         # Set folder addresses
         load_input_from = "../02-FTLE_data" + R_folder[k] + Flowfield_folder[i]
         save_plot_to    = "." + R_folder[k] + Flowfield_folder[i]
         
+        
+        
         # Loop over Stokes numbers folders
         for j in range(0, len(St_v)):
             
+            # Print on console the Stokes number for which we are currently
+            # generating the plots
             print("\n          - St = " + str(St_v[j]) + ":\n")
+            
+            
             
             # Import file with differences
             with h5py.File(load_input_from + 'b00_DIFFR_iFTLE-R=' + R_v[k] + \
@@ -106,22 +122,36 @@ for k in range(0, len(R_folder)):
             
             count += 1
             
+            
+            #
+            #############
             # Plot FTLE #
+            #############
+            #
             fig, axs = plt.subplots(1, 2, sharey=True, figsize=(4.5, 2.5))
+            
+            
             
             # Loop over Integrating methods folders
             for l in range(0, len(Method_v)):
                 
+                # Print on console the kind of particle trajectories we
+                # are using right now to generate the plot: with or without
+                # history term
                 if Method_v[l] == "b02_STKS2":
                     print("               - Without History Term.")
                     
                 elif Method_v[l] == "b06_IMEX2":
                     print("               - With History Term.\n")
                 
+                
+                
                 # Import FTLE data
                 with h5py.File(load_input_from + Method_v[l] + '_iFTLE-R=' + \
                                R_v[k] + '-St=' + St_v[j] + '.hdf5', "r") as f:
                     FTLEmap  = f["FTLE"][()]
+                
+                
                 
                 # Create colourmap
                 im    = axs[l].imshow(FTLEmap, cmap='jet',
@@ -130,15 +160,19 @@ for k in range(0, len(R_folder)):
                                       extent = [x0.min(), x0.max(),
                                                 y0.min(), y0.max()])
                 
+                
+                
                 # Set plotting parameters
                 axs[l].set_xlabel("x", fontsize=fs)
                 if l == 0: axs[l].set_ylabel("y", fontsize=fs)
                 
                 if Method_v[l] == "b02_STKS2":
-                    axs[l].set_title("FTLE without History, St=" + str(St_v[j]), fontsize=fs)
+                    axs[l].set_title("FTLE without History, S=" + str(St_v[j]), fontsize=fs)
                     
                 elif Method_v[l] == "b06_IMEX2":
-                    axs[l].set_title("FTLE with History, St=" + str(St_v[j]), fontsize=fs)
+                    axs[l].set_title("FTLE with History, S=" + str(St_v[j]), fontsize=fs)
+            
+            
             
             # Keep setting plotting parameters
             fig.subplots_adjust(right=0.85)
@@ -147,9 +181,17 @@ for k in range(0, len(R_folder)):
             clb.ax.tick_params(labelsize=fs)
             plt.rcParams.update({'font.size': fs})
             
+            
+            
             # Save plot
+            # EPS
+            plt.savefig(save_plot_to + 'b00_PLOTS_FTLEXP-R=' + R_v[k] + '-St=' + St_v[j] + '.eps',
+                        format='eps', dpi=200, bbox_inches='tight')
+            
+            
+            # PDF
             plt.savefig(save_plot_to + 'b00_PLOTS_FTLEXP-R=' + R_v[k] + '-St=' + St_v[j] + '.pdf',
-                        format='pdf', dpi=200, bbox_inches='tight')
+                        format='pdf', dpi=200, bbox_inches='tight')            
             
             # Crop borders
             call(["pdfcrop", save_plot_to + \
@@ -160,11 +202,16 @@ for k in range(0, len(R_folder)):
             plt.close(fig)
             
             
+            # Print on folder that we are generating the plot with
+            # the differences
             print("\n               - Plot with differences.\n")
+            
             
             
             # Plot differences on FTLE for Stokes and Full MRE #
             count += 1
+            
+            
             
             # Plot parameters for Difference plots
             fig = plt.figure(count, layout='tight', figsize=(2.5, 2.5))
@@ -175,14 +222,15 @@ for k in range(0, len(R_folder)):
                               vmin = -100, vmax = 100,
                               extent = [x0.min(), x0.max(),
                                         y0.min(), y0.max()])
+            
             plt.xlabel("x", fontsize=fs)
             plt.ylabel("y", fontsize=fs)
 
             plt.colorbar(c, shrink=shrink_scale)
             
             plt.tick_params(axis='both', labelsize=fs)
-            #plt.gca().set_aspect(x0.max()/y0.max())
             
+            # PDF
             plt.savefig(save_plot_to + 'b00_DIFFR_iFTLE-R=' + R_v[k] +\
                                        '-St=' + St_v[j] + '.pdf',
                         format='pdf', dpi=200, bbox_inches='tight')
@@ -191,6 +239,11 @@ for k in range(0, len(R_folder)):
                   'b00_DIFFR_iFTLE-R=' + R_v[k] + '-St=' + St_v[j] + '.pdf',
                    save_plot_to + \
                   'b00_DIFFR_iFTLE-R=' + R_v[k] + '-St=' + St_v[j] + '.pdf'])
+            
+            # EPS
+            plt.savefig(save_plot_to + 'b00_DIFFR_iFTLE-R=' + R_v[k] +\
+                                       '-St=' + St_v[j] + '.eps',
+                        format='eps', dpi=200, bbox_inches='tight')
                 
             plt.close(fig)
 
