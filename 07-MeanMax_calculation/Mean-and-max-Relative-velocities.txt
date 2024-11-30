@@ -1,0 +1,195 @@
+Mean and maximum relative velocities for particle trajectories calculated with history. 
+
+
+- In the double gyre: 
+   - With St=0.1:
+      - R=0.78: 
+         - Particle number: 2774
+            - Mean relative velocity: 0.0024061683513218316
+            - Max. relative velocity: 0.004563761100454517
+        - Particle number: 11700
+            - Mean relative velocity: 0.0028347296463839197
+            - Max. relative velocity: 0.005321403661601227
+        - Particle number: 16355
+            - Mean relative velocity: 0.0024309649648417706
+            - Max. relative velocity: 0.0047818933125490775
+      - R=1.22: 
+         - Particle number: 5024
+            - Mean relative velocity: 0.0025087010245783835
+            - Max. relative velocity: 0.0057257292658708025
+        - Particle number: 10922
+            - Mean relative velocity: 0.0023370834361112684
+            - Max. relative velocity: 0.005044314451145789
+        - Particle number: 8878
+            - Mean relative velocity: 0.0026793252044559385
+            - Max. relative velocity: 0.005648266707331789
+   - With St=1.0:
+      - R=0.78: 
+         - Particle number: 1868
+            - Mean relative velocity: 0.011890670419397708
+            - Max. relative velocity: 0.021729848669749433
+        - Particle number: 19795
+            - Mean relative velocity: 0.008483160411279347
+            - Max. relative velocity: 0.013914582892619851
+        - Particle number: 15967
+            - Mean relative velocity: 0.01123372396501674
+            - Max. relative velocity: 0.028251351236400102
+      - R=1.22: 
+         - Particle number: 1237
+            - Mean relative velocity: 0.010087468616912905
+            - Max. relative velocity: 0.019801011742540828
+        - Particle number: 8775
+            - Mean relative velocity: 0.011565791680973686
+            - Max. relative velocity: 0.02330182043999325
+        - Particle number: 16651
+            - Mean relative velocity: 0.010949722617124508
+            - Max. relative velocity: 0.02144118332320488
+   - With St=10.0:
+      - R=0.78: 
+         - Particle number: 7913
+            - Mean relative velocity: 0.027853558992635245
+            - Max. relative velocity: 0.04370054495729161
+        - Particle number: 19854
+            - Mean relative velocity: 0.03260800286504395
+            - Max. relative velocity: 0.07623859794427335
+        - Particle number: 7840
+            - Mean relative velocity: 0.025415003685513225
+            - Max. relative velocity: 0.045219631804455054
+      - R=1.22: 
+         - Particle number: 20192
+            - Mean relative velocity: 0.020178319853498983
+            - Max. relative velocity: 0.04119356979662464
+        - Particle number: 10115
+            - Mean relative velocity: 0.01987951101188836
+            - Max. relative velocity: 0.04512374143301626
+        - Particle number: 17734
+            - Mean relative velocity: 0.02017176866194033
+            - Max. relative velocity: 0.0344735749432147
+- In the Bickley jet: 
+   - With St=0.1:
+      - R=0.78: 
+         - Particle number: 3638
+            - Mean relative velocity: 0.0006660107536433313
+            - Max. relative velocity: 0.0009040437412990645
+        - Particle number: 490
+            - Mean relative velocity: 0.00043234812660140535
+            - Max. relative velocity: 0.0005475067229135486
+        - Particle number: 11938
+            - Mean relative velocity: 0.00020528186721345662
+            - Max. relative velocity: 0.0003704496807801779
+      - R=1.22: 
+         - Particle number: 12276
+            - Mean relative velocity: 0.002516132801608119
+            - Max. relative velocity: 0.009550235944779259
+        - Particle number: 2327
+            - Mean relative velocity: 0.0022917154790443894
+            - Max. relative velocity: 0.008218189044401409
+        - Particle number: 15408
+            - Mean relative velocity: 0.002642320931505511
+            - Max. relative velocity: 0.010470489738136433
+   - With St=1.0:
+      - R=0.78: 
+         - Particle number: 4133
+            - Mean relative velocity: 0.0016496383178645742
+            - Max. relative velocity: 0.002406314571209602
+        - Particle number: 13746
+            - Mean relative velocity: 0.015341613619555071
+            - Max. relative velocity: 0.037346571541239916
+        - Particle number: 5392
+            - Mean relative velocity: 0.01577736132259595
+            - Max. relative velocity: 0.03298113648414903
+      - R=1.22: 
+         - Particle number: 578
+            - Mean relative velocity: 0.015152411560828227
+            - Max. relative velocity: 0.035893277437929146
+        - Particle number: 8000
+            - Mean relative velocity: 0.011106366031011807
+            - Max. relative velocity: 0.02097542817381618
+        - Particle number: 1962
+            - Mean relative velocity: 0.01334997671789946
+            - Max. relative velocity: 0.03495349362275365
+   - With St=10.0:
+      - R=0.78: 
+         - Particle number: 5119
+            - Mean relative velocity: 0.04475912066743387
+            - Max. relative velocity: 0.10377782541778664
+        - Particle number: 12900
+            - Mean relative velocity: 0.03182488643843214
+            - Max. relative velocity: 0.05177521496526529
+        - Particle number: 3711
+            - Mean relative velocity: 0.03655385294279269
+            - Max. relative velocity: 0.08472227695645206
+      - R=1.22: 
+         - Particle number: 6050
+            - Mean relative velocity: 0.024776535530421917
+            - Max. relative velocity: 0.03888593802594305
+        - Particle number: 13475
+            - Mean relative velocity: 0.06058961353290304
+            - Max. relative velocity: 0.08671187103068168
+        - Particle number: 6510
+            - Mean relative velocity: 0.007779346641763379
+            - Max. relative velocity: 0.01320797398772668
+- In the Faraday flow: 
+   - With St=0.1:
+      - R=0.78: 
+         - Particle number: 17013
+            - Mean relative velocity: 0.0501156025789202
+            - Max. relative velocity: 0.10061099081115571
+        - Particle number: 1656
+            - Mean relative velocity: 0.06696655000868268
+            - Max. relative velocity: 0.27405611418205267
+        - Particle number: 25919
+            - Mean relative velocity: 0.04225037627370585
+            - Max. relative velocity: 0.28011864748677956
+      - R=1.22: 
+         - Particle number: 27194
+            - Mean relative velocity: 0.032765779222511816
+            - Max. relative velocity: 0.11784517079736341
+        - Particle number: 22216
+            - Mean relative velocity: 0.04545001142478952
+            - Max. relative velocity: 0.13059051910861647
+        - Particle number: 25825
+            - Mean relative velocity: 0.04027219384964999
+            - Max. relative velocity: 0.09802087769471568
+   - With St=1.0:
+      - R=0.78: 
+         - Particle number: 9074
+            - Mean relative velocity: 0.08384483039539528
+            - Max. relative velocity: 0.3771967103352603
+        - Particle number: 36249
+            - Mean relative velocity: 0.5157199559734493
+            - Max. relative velocity: 1.108011318034692
+        - Particle number: 37179
+            - Mean relative velocity: 0.07661335891527468
+            - Max. relative velocity: 0.18264404354560287
+      - R=1.22: 
+         - Particle number: 23122
+            - Mean relative velocity: 0.21894954516518716
+            - Max. relative velocity: 0.46872539173782335
+        - Particle number: 26814
+            - Mean relative velocity: 0.05209711198542947
+            - Max. relative velocity: 0.13394466321385523
+        - Particle number: 12894
+            - Mean relative velocity: 1.1276337119332054
+            - Max. relative velocity: 2.2459376227235976
+   - With St=10.0:
+      - R=0.78: 
+         - Particle number: 17982
+            - Mean relative velocity: 0.30121728677675086
+            - Max. relative velocity: 0.48939135422196617
+        - Particle number: 29835
+            - Mean relative velocity: 0.6394049716157217
+            - Max. relative velocity: 1.2545144668961192
+        - Particle number: 14387
+            - Mean relative velocity: 1.3771819616634737
+            - Max. relative velocity: 2.5043839376818133
+      - R=1.22: 
+         - Particle number: 16259
+            - Mean relative velocity: 0.3211737587966539
+            - Max. relative velocity: 1.133493032004667
+        - Particle number: 36040
+            - Mean relative velocity: 0.3787567731777112
+            - Max. relative velocity: 0.9127808167252851
+        - Particle number: 19879
+            - Mean relative velocity: 0.08512816047977455
+            - Max. relative velocity: 0.26011227520773456
