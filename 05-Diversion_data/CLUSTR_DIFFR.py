@@ -46,19 +46,19 @@ for i in range(0, len(Flowfield_folder)):
         # Load initial conditions
         mat = scipy.io.loadmat('../IniCondDblGyre.mat')
         L_scale = 1.0
-        print("      - Double Gyre.")
+        print("\n      - Double Gyre.")
         
     elif Flowfield_folder[i] == "/02-Bickley_Jet/":
         # Load initial conditions
         mat = scipy.io.loadmat('../IniCondBickley.mat')
         L_scale = 1.770 
-        print("      - Bickley Jet.")
+        print("\n      - Bickley Jet.")
         
     elif Flowfield_folder[i] == "/03-Faraday_Flow/":
         # Load initial conditions
         mat = scipy.io.loadmat('../IniCondFaraday.mat')
         L_scale = 0.052487
-        print("      - Faraday Flow.")
+        print("\n      - Faraday Flow.")
     
     
     
