@@ -17,9 +17,9 @@ import h5py
 
 # Decide which value of R is used:
 ## R=7/9;   R=1;   R=11/9
-R_folder = np.array(["/R=0.78", "/R=1.00", "/R=1.22"])
+R_folder = np.array(["/R=0.78", "/R=1.22"])
 
-R_v      = np.array(["0.78", "1.0", "1.22"])
+R_v      = np.array(["0.78", "1.22"])
 
 # Decide which field flow is used:
 ## 1: Double Gyre;   3: Bickley Jet;   4: Faraday Flow
@@ -37,8 +37,6 @@ St_v = np.array(["0.01", "0.1", "1.0", "10.0"])
 for k in range(0, len(R_folder)):
     if R_v[k] == "0.78":
         print("1.- Checking final trajectory points for R = 0.78.")
-    elif R_v[k] == "1.0":
-        print("2.- Checking final trajectory points for R = 1.00")
     elif R_v[k] == "1.22":
         print("3.- Checking final trajectory points for R = 1.22.")
     
