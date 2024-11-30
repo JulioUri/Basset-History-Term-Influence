@@ -19,9 +19,9 @@ import h5py
 
 # Decide which value of R is used:
 ## R=7/9;   R=1;   R=11/9
-R_folder = np.array(["/R=0.78", "/R=1.00", "/R=1.22"])
+R_folder = np.array(["/R=0.78", "/R=1.22"])
 
-R_v      = np.array(["0.78", "1.0", "1.22"])
+R_v      = np.array(["0.78", "1.22"])
 
 # Decide which field flow is used:
 ## 1: Double Gyre;   3: Bickley Jet;   4: Faraday Flow
@@ -40,6 +40,31 @@ Method_v = np.array(["b02_STKS2", "b06_IMEX2"])
 ##########################################################################
 
 def calculateFTLE(elem, limit):
+    '''
+
+    Parameters
+    ----------
+    elem : int
+        Particle's number/index to consider in the calculation of the FTLE.
+        Used to calculate the FTLE at this particle's position.
+    limit : int
+        Length of the first dimension of the matrix to notice
+        when we have moved to a different column of the matrix of data.
+
+    Returns
+    -------
+    float
+        FTLE result, we do not divide by time to avoid it to vanish as time
+        grows.
+
+
+    Note
+    ----
+        We use a finite difference method to obtain the FTLE.
+        We mimic the FD method used in Garaboa-Paz and Pérez-Muñuzuri (2015),
+        with the difference that we only consider particle positions.
+
+    '''
     F  = np.zeros((2,2))
     if (elem % limit == 0 and elem // limit == 0):
         X0      = np.zeros((2,2))
@@ -317,66 +342,96 @@ zmin_Gyre, zmax_Gyre = 10., 1.
 zmin_Bkly, zmax_Bkly = 10., 1.
 zmin_Frdy, zmax_Frdy = 10., 1.
 
-# Loop over R values
+
+
+# Loop over R values [0.78, 1.22]
 for k in range(0, len(R_folder)):
     
+    # Print text on console to know which R we are calculating
     if R_folder[k] == "/R=0.78":
         print("1.- Calculate FTLEs for R = 0.78.")
-    elif R_folder[k] == "/R=1.00":
-        print("2.- Calculate FTLEs for R = 1.00")
     elif R_folder[k] == "/R=1.22":
         print("3.- Calculate FTLEs for R = 1.22.")
     
-    # Loop over flow fields
+    
+    
+    # Loop over flow fields [Double gyre, Bickley jet, Faraday flow]
     for i in range(0, len(Flowfield_folder)):
         
+        # Load initial position data (dimensionfull data).
+        # Define the lengthscale of the flow, in case we wanted to
+        # nondimensionalise.
+        # Print text on console to indicate which field we are calculating.
         if Flowfield_folder[i] == "/01-Double_Gyre/":
             # Import Initial Condition file
             mat = scipy.io.loadmat('../IniCondDblGyre.mat')
+            L_scale = 1.0
             print("      - In the Double Gyre.")
             
         elif Flowfield_folder[i] == "/02-Bickley_Jet/":
             # Import Initial Condition file
             mat = scipy.io.loadmat('../IniCondBickley.mat')
+            L_scale = 1.770
             print("      - Bickley Jet.")
             
         elif Flowfield_folder[i] == "/03-Faraday_Flow/":
             # Import Initial Condition file
             mat = scipy.io.loadmat('../IniCondFaraday.mat')
+            L_scale = 0.052487
             print("      - Faraday Flow.")
         
-        # Define address to directories
+        
+        
+        # Define address to directories to load and save data
         load_input_from = "../01-Trajectory_data" + R_folder[k] + Flowfield_folder[i]
         save_output_to  = "." + R_folder[k] + Flowfield_folder[i]
         
-        # Import initial positions
-        x0     = mat['X']
-        y0     = mat['Y']
         
+        
+        # Import initial positions (Divide by L_scale in case you want to
+        # nondimensionalise).
+        x0     = mat['X'] #/ L_scale
+        y0     = mat['Y'] #/ L_scale
+        
+        
+        
+        # Obtain the length of the column of the dataset
         N, L   = np.shape(x0)
-        
         limit = N
+        
+        
         
         # Loop over Stokes numbers
         for j in range(0, len(St_v)):
             
+            # Print on console the Stokes number we are calculating
             print("          - St = " + str(St_v[j]))
+            
+            
             
             # Loop over integrating methods
             for l in range(0, len(Method_v)):
                 
+                # Print on console the kind of data we are using: with or
+                # without history term.
                 if Method_v[l] == "b02_STKS2":
                     print("               - Without History Term (solve_ivp solver).")
                 elif Method_v[l] == "b06_IMEX2":
                     print("               - With History Term (FD2 + IMEX2).")
                 
+                
+                
                 # Create empty matrix to plot
                 FTLEmap = np.zeros((N, L))
+                
+                
                 
                 # # Import time values for the FTLE calculation
                 # with h5py.File(load_input_from + Method_v[l] + '_TIMEVC-St=' + St_v[j] + '.hdf5', "r") as f:
                 #     taxis      = f['default'][()]
                 # tau   = 1.0 # taxis[-1] - taxis[0]
+                
+                
                 
                 result = dict()
                 traj_f = dict()
@@ -386,18 +441,25 @@ for k in range(0, len(R_folder)):
                     Parameters = f["Parameters"][()]
                     n        = len(f.keys()) - 1 # Parameters data-set does not count
                     
-                    # Calculate FTLEs using the trajectory data
+                    
+                    
+                    # Calculate FTLEs using the trajectory data.
+                    # We use paralellisation to optimise time.
                     with mp.Pool(36) as pool:
                         for elem in range(0,n):
                             result[str(elem+1)] = pool.apply_async(calculateFTLE, args = (elem, limit), error_callback=printfun)
                             
                         pool.close()
                         pool.join()
-                        
+                
+                
+                
                 # Fill in empty matrix
                 for elem in range(0,n):
                     try: FTLEmap[N-(elem % limit)-1, elem // limit] = result[str(elem+1)].get()
                     except: pass
+                
+                
                 
                 # Save FTLE data
                 with h5py.File(save_output_to + Method_v[l] + '_iFTLE-R=' +\
@@ -407,7 +469,10 @@ for k in range(0, len(R_folder)):
                     f.create_dataset("Y", data=y0)
                     f.create_dataset("FTLE", data=FTLEmap)
                 
-                # Save max and min FTLE into a variable to set colorbar
+                
+                
+                # Save max and min FTLE into a variable to set colorbar in
+                # a later stage.
                 if Flowfield_folder[i] == "/01-Double_Gyre/":
                     if FTLEmap.min() < zmin_Gyre:
                         zmin_Gyre = FTLEmap.min()
@@ -427,15 +492,21 @@ for k in range(0, len(R_folder)):
                     if FTLEmap.max() > zmax_Frdy:
                         zmax_Frdy = FTLEmap.max()
                 
+                
+                
                 # Save matrix
                 if Method_v[l] == "b02_STKS2":
                     FTLE_Stokes = np.copy(FTLEmap)
                 elif Method_v[l] == "b06_IMEX2":
                     FTLE_Full   = np.copy(FTLEmap)
             
+            
+            
             # Calculate Relative difference between solutions
             print("               - Calculating differences in final position.")
             FTLEdiff         = 100. * (FTLE_Full - FTLE_Stokes) / abs(FTLE_Full).max()
+            
+            
             
             # Save Relative difference values
             with h5py.File(save_output_to + 'b00_DIFFR_iFTLE-R=' + R_v[k] +\
@@ -444,6 +515,8 @@ for k in range(0, len(R_folder)):
                 f.create_dataset("X_0", data=x0)
                 f.create_dataset("Y_0", data=y0)
                 f.create_dataset("FTLE diff in %", data=FTLEdiff)
+
+
 
 # Save max and min FTLE into a file to set colorbar
 ## For the Double Gyre
