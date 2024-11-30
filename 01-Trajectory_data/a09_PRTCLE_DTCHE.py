@@ -146,15 +146,21 @@ class maxey_riley_Daitche(object):
           
           if self.vel.periodic == True:
           
-              if x_np1 > self.vel.x_right:
-                  x_np1 -= self.vel.dx
-              elif x_np1 < self.vel.x_left:
-                  x_np1 += self.vel.dx
+              try:
+                  if x_np1 >= self.vel.x_right:
+                      x_np1 -= self.vel.dx
+                  elif x_np1 < self.vel.x_left:
+                      x_np1 += self.vel.dx
+              except:
+                  pass
     
-              if y_np1 > self.vel.y_up:
-                  y_np1 -= self.vel.dy
-              elif y_np1 < self.vel.y_down:
-                  y_np1 += self.vel.dy  
+              try:
+                  if y_np1 >= self.vel.y_up:
+                       y_np1 -= self.vel.dy
+                  elif y_np1 < self.vel.y_down:
+                       y_np1 += self.vel.dy  
+              except:
+                  pass
 
           x_v       = np.append(x_v, x_np1)
           y_v       = np.append(y_v, y_np1)
@@ -307,15 +313,21 @@ class maxey_riley_Daitche(object):
           
           if self.vel.periodic == True:
           
-              if x_np1 > self.vel.x_right:
-                  x_np1 -= self.vel.dx
-              elif x_np1 < self.vel.x_left:
-                  x_np1 += self.vel.dx
-    
-              if y_np1 > self.vel.y_up:
-                  y_np1 -= self.vel.dy
-              elif y_np1 < self.vel.y_down:
-                  y_np1 += self.vel.dy
+              try:
+                  if x_np1 >= self.vel.x_right:
+                      x_np1 -= self.vel.dx
+                  elif x_np1 < self.vel.x_left:
+                      x_np1 += self.vel.dx
+              except:
+                  pass
+              
+              try:
+                  if y_np1 >= self.vel.y_up:
+                      y_np1 -= self.vel.dy
+                  elif y_np1 < self.vel.y_down:
+                      y_np1 += self.vel.dy
+              except:
+                  pass
           
           x_v       = np.append(x_v, x_np1)
           y_v       = np.append(y_v, y_np1)
@@ -571,15 +583,21 @@ class maxey_riley_Daitche(object):
 
           if self.vel.periodic == True:
           
-              if x_np1 > self.vel.x_right:
-                  x_np1 -= self.vel.dx
-              elif x_np1 < self.vel.x_left:
-                  x_np1 += self.vel.dx
-    
-              if y_np1 > self.vel.y_up:
-                  y_np1 -= self.vel.dy
-              elif y_np1 < self.vel.y_down:
-                  y_np1 += self.vel.dy
+              try:
+                  if x_np1 >= self.vel.x_right:
+                      x_np1 -= self.vel.dx
+                  elif x_np1 < self.vel.x_left:
+                      x_np1 += self.vel.dx
+              except:
+                  pass
+              
+              try:
+                  if y_np1 >= self.vel.y_up:
+                      y_np1 -= self.vel.dy
+                  elif y_np1 < self.vel.y_down:
+                      y_np1 += self.vel.dy
+              except:
+                  pass
 
           
           x_v          = np.append(x_v, x_np1)

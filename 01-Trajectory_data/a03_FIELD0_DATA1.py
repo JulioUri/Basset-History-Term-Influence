@@ -30,8 +30,21 @@ class velocity_field_Faraday1(velocity_field):
     self.u = mat['vx']
     self.v = -mat['vy']
     
+    '''
+    Define the space domain for which we have data.
+    if self.lmits == False, then the programme understands the field is defined
+    in all R^2.
+    if self.limits == True, then the programme understands the field is defined
+    only within a subset of R^2 which needs to be defined.
+    '''
     self.periodic = False
     self.limits   = True
+    
+    # Below, the characteristic length scales of the flow, used to nondimensionalise.
+    self.U     = np.sqrt( np.mean(self.u**2. + self.v**2.) ) # ~0.004862 m/s
+    self.L     = self.Y.max()     # ~0.052487 m
+    self.T     = self.L / self.U  # ~10.795254 s
+    self.t_lim = 42.240 / self.T  # ~3.912831, there is no more data after this time
     
     [ny_mesh, nx_mesh] = np.shape(self.X)
     [nt_data, ny_data, nx_data] = np.shape(self.u)
@@ -42,7 +55,7 @@ class velocity_field_Faraday1(velocity_field):
     
     In this case, 40ms were used.
     '''
-    self.delta_t = 40
+    self.delta_t = 0.04 / self.T # 40ms
     
     '''
     Check the amount of data coincide
@@ -50,8 +63,8 @@ class velocity_field_Faraday1(velocity_field):
     assert ny_mesh==ny_data, "Number of entries in y direction in mesh and data do not match"
     assert nx_mesh==nx_data, "Number of entries in x direction in mesh and data do not match"
     
-    self.xaxis = self.X[0,:]
-    self.yaxis = self.Y[:,0]
+    self.xaxis = self.X[0,:] / self.L # Nondimensionalise
+    self.yaxis = self.Y[:,0] / self.L # Nondimensionalise
     self.x_left  = np.min(self.xaxis)
     self.x_right = np.max(self.xaxis)
     self.y_down  = np.min(self.yaxis)
@@ -63,10 +76,10 @@ class velocity_field_Faraday1(velocity_field):
     self.spline_u = []
     self.spline_v = []
     for nn in range(0,nt_data):
-      uu = np.copy(self.u[nn,:,:])
+      uu = np.copy(self.u[nn,:,:]) / self.U
       self.spline_u.append(RectBivariateSpline(self.xaxis, self.yaxis, uu.transpose(), bbox = [self.x_left, self.x_right, self.y_down, self.y_up], \
                                kx = 3, ky = 3, s = 0.0))
-      vv = np.copy(self.v[nn,:,:])
+      vv = np.copy(self.v[nn,:,:]) / self.U
       self.spline_v.append(RectBivariateSpline(self.xaxis, self.yaxis, vv.transpose(), bbox = [self.x_left, self.x_right, self.y_down, self.y_up], \
                                kx = 3, ky = 3, s = 0.0))
       
@@ -96,10 +109,9 @@ class velocity_field_Faraday1(velocity_field):
             u = 0.0
             v = 0.0
         else:
-            t_ms = t * 1e3
-            assert t_ms <= 42240 and t_ms >= 0, "t_ms must be within the time domain, t_ms in [0,42240] (in miliseconds)"
-            nt = int(np.floor(t_ms/self.delta_t))
-            t_remain = t_ms % self.delta_t
+            assert t <= self.t_lim and t >= 0., "t must be within the time domain, t in [0,3.912831]"
+            nt = int(np.floor(t/self.delta_t))
+            t_remain = t % self.delta_t
             #print(nt,t_remain)
     
             if t_remain == 0.0:
@@ -116,10 +128,9 @@ class velocity_field_Faraday1(velocity_field):
         
                 v = v_prev + (v_next - v_prev) * (t_remain / self.delta_t)
     else:
-        t_ms = t * 1e3
-        assert t_ms <= 42240 and t_ms >= 0, "t_ms must be within the time domain, t_ms in [0,42240] (in miliseconds)"
-        nt = int(np.floor(t_ms/self.delta_t))
-        t_remain = t_ms % self.delta_t
+        assert t <= self.t_lim and t >= 0, "t must be within the time domain, t in [0,3.912831]"
+        nt = int(np.floor(t/self.delta_t))
+        t_remain = t % self.delta_t
         #print(nt,t_remain)
     
         if t_remain == 0.0:
@@ -147,10 +158,9 @@ class velocity_field_Faraday1(velocity_field):
             vx = 0.0
             vy = 0.0
         else:
-            t_ms = t * 1e3
-            assert t_ms <= 42240 and t_ms >= 0, "t_ms must be within the time domain, t_ms in [0,42240] (in miliseconds)"
-            nt = int(np.floor(t_ms/self.delta_t))
-            t_remain = t_ms % self.delta_t
+            assert t <= self.t_lim and t >= 0, "t must be within the time domain, t in [0,3.912831]"
+            nt = int(np.floor(t/self.delta_t))
+            t_remain = t % self.delta_t
         
             if t_remain == 0.0:
                 ux = self.spline_u[nt].ev(xi = x, yi = y, dx = 1, dy = 0)
@@ -178,10 +188,9 @@ class velocity_field_Faraday1(velocity_field):
         
                 vy = vy_prev + (vy_next - vy_prev) * (t_remain / self.delta_t)  
     else:
-        t_ms = t * 1e3
-        assert t_ms <= 42240 and t_ms >= 0, "t_ms must be within the time domain, t_ms in [0,42240] (in miliseconds)"
-        nt = int(np.floor(t_ms/self.delta_t))
-        t_remain = t_ms % self.delta_t
+        assert t <= self.t_lim and t >= 0, "t must be within the time domain, t in [0,3.912831]"
+        nt = int(np.floor(t/self.delta_t))
+        t_remain = t % self.delta_t
         
         if t_remain == 0.0:
             ux = self.spline_u[nt].ev(xi = x, yi = y, dx = 1, dy = 0)
@@ -219,11 +228,10 @@ class velocity_field_Faraday1(velocity_field):
             ut = 0.0
             vt = 0.0
         else:
-            t_ms = t * 1e3
-            assert t_ms <= 42240 and t_ms >= 0, "t_ms must be within the time domain, t_ms in [0,42240] (in miliseconds)"
-            nt = int(np.ceil(t_ms/self.delta_t))
+            assert t <= self.t_lim and t >= 0, "t must be within the time domain, t in [0,3.912831]"
+            nt = int(np.ceil(t/self.delta_t))
     
-            if t_ms == 0.0:
+            if t == 0.0:
                 ut = 0.0 # At initial time, du/dt = 0
                 vt = 0.0
             else:
@@ -235,11 +243,10 @@ class velocity_field_Faraday1(velocity_field):
                 v_prev = self.spline_v[nt-1].ev(xi = x, yi = y, dx = 0, dy = 0)
                 vt = ( v_next - v_prev ) / self.delta_t
     else:
-        t_ms = t * 1e3
-        assert t_ms <= 42240 and t_ms >= 0, "t_ms must be within the time domain, t_ms in [0,42240] (in miliseconds)"
-        nt = int(np.ceil(t_ms/self.delta_t))
+        assert t <= self.t_lim and t >= 0, "t must be within the time domain, t in [0,3.912831]"
+        nt = int(np.ceil(t/self.delta_t))
     
-        if t_ms == 0.0:
+        if t == 0.0:
             ut = 0.0 # At initial time, du/dt = 0
             vt = 0.0
         else:

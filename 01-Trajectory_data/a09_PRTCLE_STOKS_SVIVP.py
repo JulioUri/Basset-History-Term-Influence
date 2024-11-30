@@ -46,16 +46,22 @@ class particle_stokes(object):
   def function(self, t, x):
 
       if self.vel.periodic == True:
+          
+          try:
+              if x[0] >= self.vel.x_right:
+                  x[0] -= self.vel.dx
+              elif x[0] < self.vel.x_left:
+                  x[0] += self.vel.dx
+          except:
+              pass
 
-          if x[0] > self.vel.x_right:
-              x[0] -= self.vel.dx
-          elif x[0] < self.vel.x_left:
-              x[0] += self.vel.dx
-
-          if x[1] > self.vel.y_up:
-              x[1] -= self.vel.dy
-          elif x[1] < self.vel.y_down:
-              x[1] += self.vel.dy
+          try:
+              if x[1] >= self.vel.y_up:
+                  x[1] -= self.vel.dy
+              elif x[1] < self.vel.y_down:
+       	          x[1] += self.vel.dy
+          except:
+              pass
 
       u, v           = self.vel.get_velocity(x[0], x[1], t)
       ux, uy, vx, vy = self.vel.get_gradient(x[0], x[1], t)
@@ -80,6 +86,8 @@ class particle_stokes(object):
           v0 = np.copy(self.vel_vec)
           y0 = np.append(x0, v0)
       else:
+          if self.pos_vec.shape == (2,): self.pos_vec = np.array([self.pos_vec])
+          if self.vel_vec.shape == (2,): self.vel_vec = np.array([self.vel_vec])
           x0 = np.copy(self.pos_vec[-1])
           v0 = np.copy(self.vel_vec[-1])
           y0 = np.append(x0, v0)
@@ -88,15 +96,21 @@ class particle_stokes(object):
       x = np.array([vec.y[0][-1], vec.y[1][-1]])
       
       if self.vel.periodic == True:
-          if x[0] > self.vel.x_right:
-              x[0] -= self.vel.dx
-          elif x[0] < self.vel.x_left:
-              x[0] += self.vel.dx
-        		
-          if x[1] > self.vel.y_up:
-              x[1] -= self.vel.dy
-          elif x[1] < self.vel.y_down:
-       	      x[1] += self.vel.dy
+          try:
+              if x[0] >= self.vel.x_right:
+                  x[0] -= self.vel.dx
+              elif x[0] < self.vel.x_left:
+                  x[0] += self.vel.dx
+          except:
+              pass
+
+          try:
+              if x[1] >= self.vel.y_up:
+                  x[1] -= self.vel.dy
+              elif x[1] < self.vel.y_down:
+       	          x[1] += self.vel.dy
+          except:
+              pass
 
       v = np.array([vec.y[2][-1], vec.y[3][-1]])
       

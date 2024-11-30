@@ -85,15 +85,21 @@ class particle_stokes(object):
       
       if self.vel.periodic == True:
           
-          if x[0] > self.vel.x_right:
-              x[0] -= self.vel.dx
-          elif x[0] < self.vel.x_left:
-              x[0] += self.vel.dx
+          try:
+              if x[0] >= self.vel.x_right:
+                  x[0] -= self.vel.dx
+              elif x[0] < self.vel.x_left:
+                  x[0] += self.vel.dx
+          except:
+              pass
 
-          if x[1] > self.vel.y_up:
-              x[1] -= self.vel.dy
-          elif x[1] < self.vel.y_down:
-              x[1] += self.vel.dy
+          try:
+              if x[1] >= self.vel.y_up:
+                  x[1] -= self.vel.dy
+              elif x[1] < self.vel.y_down:
+                  x[1] += self.vel.dy
+          except:
+              pass
 
       self.x         = x
       self.pos_vec   = np.vstack([self.pos_vec,self.x])

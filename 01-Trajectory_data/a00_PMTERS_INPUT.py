@@ -4,7 +4,7 @@
 import numpy as np
 import scipy
 import multiprocessing as mp
-import sys
+# import sys
 
 from a03_FIELD0_BICKL import velocity_field_Bickley
 from a03_FIELD0_DATA1 import velocity_field_Faraday1
@@ -16,7 +16,6 @@ Created on Thu Mar 24 15:47:47 2022
 
 This file contains some of the parameters needed to run the SOLVER files.
 """
-
 
 
 ################################
@@ -31,48 +30,16 @@ Case_elem = 1
 
 
 
-####################
-# Define time grid #
-####################
-
-# Initial time
-tini  = 0.0
-tend  = 10.0  # Final time
-nt    = 1001  # Time nodes
-
-
-# For experimental flows, the final time cannot go beyond a threshold.
-if Case_elem == 3 and tend > 42.240:
-    # Time domain for Faraday field is restricted according to available data.
-    tend = 42.240
-
-
-
-# Create time axis
-taxis  = np.linspace(tini, tend, nt)
-dt     = taxis[1] - taxis[0]
-
-
-
-############################################
-# Define particle's and fluid's parameters #
-############################################
+###########################################
+# Define particle's and fluid's densities #
+###########################################
 
 # Densities:
 # - Particle's density
-rho_p   = 2.0
+rho_p   = 2.0 / 3.0
 
 # - Fluid's density
-rho_f   = 3.0
-
-# Particle's radius
-rad_p   = np.sqrt(3.0)
-
-# Kinematic viscocity
-nu_f    = 1.0
-
-# Time Scale of the flow
-t_scale = 0.1
+rho_f   = 1.0 # Water's density
 
 
 
@@ -93,7 +60,73 @@ elif Case_elem == 1:
 elif Case_elem == 2:
     '''Faraday Velocity Field'''
     save_output_to = './R=' + R_value + '/03-Faraday_Flow/'
-    vel     = velocity_field_Faraday1(field_boundary=True)    
+    vel     = velocity_field_Faraday1(field_boundary=True)
+
+
+
+####################
+# Define time grid #
+####################
+
+if Case_elem == 0:
+    
+    # Time Scale of the flow
+    t_scale = np.copy(vel.T)
+    
+    # Initial time
+    tini  = (  0. * t_scale ) / t_scale
+    
+    # Final time, for plotting reasons we want it to be 10
+    tend  = ( 10. * t_scale ) / t_scale  # Final time, remember that this is nondimensional time
+    
+elif Case_elem == 1:
+    
+    # Time Scale of the flow
+    t_scale = np.copy(vel.T)
+    
+    # Initial time
+    tini  = ( 10. * t_scale ) / t_scale
+    
+    # Final time, for plotting reasons we want it to be 10
+    tend  = ( 30. * t_scale ) / t_scale  # Final time, remember that this is nondimensional time
+
+elif Case_elem == 2:
+        
+    # Time Scale of the flow
+    t_scale = np.copy(vel.T)
+    
+    # Initial time
+    tini  = 0. / t_scale
+    
+    # Final time
+    tend  = 10. / t_scale  # Final time, remember that this is nondimensional time
+    
+nt    = 1001  # Time nodes
+
+
+# For experimental flows, the final time cannot go beyond a threshold.
+if Case_elem == 2:
+    assert tend < vel.t_lim, "Time domain for the Faraday flow is restricted to the available data."
+
+
+# Create time axis
+taxis  = np.linspace(tini, tend, nt)
+dt     = taxis[1] - taxis[0]
+
+
+
+####################################################
+# Define parameters to calculate the Stokes number #
+####################################################https://start.zorin.com/
+
+# Kinematic viscosity
+nu_f    = 8.917e-7 # Kinematic viscosity of water at 25ºC
+
+# Particle's radius
+# In an actual experiment one would need to set rad_p = a number, in this case
+# I am interesting in obtaining an specific value of S, so I obtain it
+# inversely with the other parameters I have.
+rad_p   = np.sqrt(0.1) * np.sqrt(3. * nu_f * t_scale)
 
 
 
@@ -120,7 +153,7 @@ x_fd_v      = -c * np.log(1.0 - xi_fd_v)
 ##############################################
 
 parallel_flag = True
-number_cores  = int(mp.cpu_count())
+number_cores  = int(mp.cpu_count()) - 1
 
 
 
@@ -135,8 +168,8 @@ elif Case_elem == 1:
 elif Case_elem == 2:
 	mat = scipy.io.loadmat('../IniCondFaraday.mat')
 
-x0     = mat['X']
-y0     = mat['Y']
+x0     = mat['X'] / vel.L  # Nondimensionalise initial positions
+y0     = mat['Y'] / vel.L  # Nondimensionalise initial positions
 
 # If initial velocity is taken equal to the background: 
 u0, v0 = vel.get_velocity(x0, y0, tini)

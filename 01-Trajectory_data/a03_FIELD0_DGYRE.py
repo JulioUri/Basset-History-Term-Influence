@@ -9,42 +9,54 @@ as in the paper."""
 class velocity_field_DoubleGyre(velocity_field):
     
     def __init__(self, periodic=False, A = 0.1, eps = 0.25, T = 10.0):
-        self.periodic  = periodic
-        self.limits    = periodic
-        self.x_left    = 0.
-        self.x_right   = 2.
-        self.dx        = self.x_right - self.x_left
-        self.y_down    = 0.
-        self.y_up      = 2.
-        self.dy        = self.y_up - self.y_down
-        
         # Define parameters of the Double Gyre
         self.A         = A
         self.eps       = eps
         self.T         = T
+        self.L         = 1.
         
         self.omega     = 2.0 * np.pi / self.T
-    
-    def impose_periodicity(self, x, y):
-        if self.periodic == True:
-            if isinstance(x, float) == True:
-                if x < self.x_left:
-                    x += self.dx
-                elif x > self.x_right:
-                    x -= self.dx
-                    
-                if y < self.y_down:
-                    y += self.dy
-                elif y > self.y_up:
-                    y -= self.dy
-                    
-            else:
-                x[x < self.x_left]  += self.dx
-                x[x > self.x_right] -= self.dx
-                y[y < self.y_up]    += self.dy
-                y[y > self.y_down]  -= self.dy
         
-        return x, y
+        '''
+        Define the space domain for which we have data.
+        if self.lmits == False, then the programme understands the field is defined
+        in all R^2.
+        if self.limits == True, then the programme understands the field is defined
+        only within a subset of R^2 which needs to be defined.
+        '''
+        
+        self.periodic = periodic
+        self.limits   = periodic
+        
+        if self.periodic == True:
+            self.x_left    = 0.
+            self.x_right   = 2.
+            self.dx        = self.x_right - self.x_left
+            self.y_down    = 0.
+            self.y_up      = 2.
+            self.dy        = self.y_up - self.y_down
+    
+    # # If self.periodic = True then the following function is necessary.
+    # def impose_periodicity(self, x, y):
+    #     if self.periodic == True:
+    #         if isinstance(x, float) == True:
+    #             if x < self.x_left:
+    #                 x += self.dx
+    #             elif x > self.x_right:
+    #                 x -= self.dx
+                    
+    #             if y < self.y_down:
+    #                 y += self.dy
+    #             elif y > self.y_up:
+    #                 y -= self.dy
+                    
+    #         else:
+    #             x[x < self.x_left]  += self.dx
+    #             x[x > self.x_right] -= self.dx
+    #             y[y < self.y_up]    += self.dy
+    #             y[y > self.y_down]  -= self.dy
+        
+    #     return x, y
     
     def a(self, t):
         return self.eps * np.sin(self.omega * t)
@@ -74,7 +86,7 @@ class velocity_field_DoubleGyre(velocity_field):
         return 2.0 * self.da_dt(t) * x + self.db_dt(t)
     
     def get_velocity(self, x, y, t):
-        x, y = self.impose_periodicity(x, y)
+        # x, y = self.impose_periodicity(x, y)
         
         u    = - self.A * np.pi * np.sin(np.pi * self.f(x,t)) * np.cos(np.pi * y)
         v    = self.A * np.pi * np.cos(np.pi * self.f(x, t)) * \
@@ -82,7 +94,7 @@ class velocity_field_DoubleGyre(velocity_field):
         return u, v
     
     def get_gradient(self, x, y, t):
-        x, y = self.impose_periodicity(x, y)
+        # x, y = self.impose_periodicity(x, y)
         
         ux = - self.A * np.pi**2.0 * np.cos(np.pi * self.f(x, t)) *\
              self.df_dx(x, t) * np.cos(np.pi * y)    
@@ -97,7 +109,7 @@ class velocity_field_DoubleGyre(velocity_field):
         return ux, uy, vx, vy
 
     def get_dudt(self, x, y, t):
-        x, y = self.impose_periodicity(x, y)
+        # x, y = self.impose_periodicity(x, y)
         
         ut = -self.A * np.pi**2.0 * np.cos(np.pi * self.f(x, t)) *\
              self.df_dt(x, t) * np.cos(np.pi * y)
