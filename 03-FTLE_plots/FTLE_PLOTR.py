@@ -27,7 +27,7 @@ R_v      = np.array(["0.78", "1.22"])
 Flowfield_folder = np.array(["/01-Double_Gyre/", "/02-Bickley_Jet/", "/03-Faraday_Flow/"])
 
 # Define vector of Stokes numbers that loop over all files.
-St_v = np.array(["0.1", "1.0", "10.0"])
+St_v = np.array(["3.0"])
 
 # Define vector of strings to chose among files with and without History Term.
 Method_v = np.array(["b02_STKS2", "b06_IMEX2"])
@@ -163,8 +163,12 @@ for k in range(0, len(R_folder)):
                 
                 
                 # Set plotting parameters
-                axs[l].set_xlabel("x", fontsize=fs)
-                if l == 0: axs[l].set_ylabel("y", fontsize=fs)
+                if Flowfield_folder[i] == "/02-Bickley_Jet/":
+                    axs[l].set_xlabel("x / Mm", fontsize=fs)
+                    if l == 0: axs[l].set_ylabel("y / Mm", fontsize=fs)
+                else:
+                    axs[l].set_xlabel("x / m", fontsize=fs)
+                    if l == 0: axs[l].set_ylabel("y / m", fontsize=fs)
                 
                 if Method_v[l] == "b02_STKS2":
                     axs[l].set_title("FTLE without History, S=" + str(St_v[j]), fontsize=fs)
@@ -223,8 +227,12 @@ for k in range(0, len(R_folder)):
                               extent = [x0.min(), x0.max(),
                                         y0.min(), y0.max()])
             
-            plt.xlabel("x", fontsize=fs)
-            plt.ylabel("y", fontsize=fs)
+            if Flowfield_folder[i] == "/02-Bickley_Jet/":
+                plt.xlabel("x / Mm", fontsize=fs)
+                plt.ylabel("y / Mm", fontsize=fs)
+            else:
+                plt.xlabel("x / m", fontsize=fs)
+                plt.ylabel("y / m", fontsize=fs)
 
             plt.colorbar(c, shrink=shrink_scale)
             
@@ -246,4 +254,3 @@ for k in range(0, len(R_folder)):
                         format='eps', dpi=200, bbox_inches='tight')
                 
             plt.close(fig)
-
