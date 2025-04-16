@@ -191,14 +191,19 @@ for k in range(0, len(R_folder)):
                 # Multiply by the lengthscale to obtain dimensional data.
                 traj_f *= L_scale
                 
-                
-                
                 # Start plotting process
                 if Flowfield_folder[i] == "/03-Faraday_Flow/":
                     fig = plt.figure(1, layout='tight', figsize=(2.5, 2.5))
-                    
-                else:
+                    plt.xlabel("x / m", fontsize=fs)
+                    plt.ylabel("y / m", fontsize=fs)
+                elif Flowfield_folder[i] == "/02-Bickley_Jet/":
                     fig = plt.figure(1, layout='tight', figsize=(2.5, 1.4))
+                    plt.xlabel("x / Mm", fontsize=fs)
+                    plt.ylabel("y / Mm", fontsize=fs)
+                elif Flowfield_folder[i] == "/01-Double_Gyre/":
+                    fig = plt.figure(1, layout='tight', figsize=(2.5, 1.4))
+                    plt.xlabel("x / m", fontsize=fs)
+                    plt.ylabel("y / m", fontsize=fs)
                     
                 #colors = cm.rainbow(np.linspace(0, 1, int(N*L)))
                 if Method_v[l] == "b02_STKS2":
@@ -210,8 +215,6 @@ for k in range(0, len(R_folder)):
                               str(St_v[j]), fontsize=fs)
                         
                 plt.scatter(traj_f[:,0], traj_f[:,1], s=0.15, color="grey", linewidth=0)
-                plt.xlabel("x", fontsize=fs)
-                plt.ylabel("y", fontsize=fs)
                 plt.xlim([x_min, x_max])
                 plt.ylim([y_min, y_max])
                 
