@@ -88,8 +88,8 @@ for i in range(0, len(Flowfield_folder)):
         
         
         # Import initial positions (Divide by L_scale for nondimensionalised plot)
-        x0     = mat['X'] # / L_scale
-        y0     = mat['Y'] # / L_scale
+        x0     = mat['X'] / L_scale
+        y0     = mat['Y'] / L_scale
         
         N, L   = np.shape(x0)
         n      = int(N * L)
