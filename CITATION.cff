@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: If you use this software, please cite both the article from preferred-citation and the software itself.
+authors:
+  - family-names: Urizarna-Carasa
+    given-names: Julio
+  - family-names: Schlegel
+    given-names: Leon
+  - family-names: Ruprecht
+    given-names: Daniel
+title: Efficient numerical methods for the Maxey-Riley-Gatignol equations with Basset history term
+version: 1.0.0
+url: https://www.sciencedirect.com/science/article/pii/S0010465525000050
+doi: https://doi.org/10.1016/j.cpc.2025.109502
+date-released: '2025-04-15'
+preferred-citation:
+  type: article
+  authors:
+  - family-names: Urizarna-Carasa
+    given-names: Julio
+  - family-names: Schlegel
+    given-names: Leon
+  - family-names: Ruprecht
+    given-names: Daniel
+  title: Efficient numerical methods for the Maxey-Riley-Gatignol equations with Basset history term
+  doi: https://doi.org/10.1016/j.cpc.2025.109502
+  url: https://www.sciencedirect.com/science/article/pii/S0010465525000050
+  type: article-journal
+  pages: '109502'
+  year: '2025'
+  conference: {}
+  publisher: {}
