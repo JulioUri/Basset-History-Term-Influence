@@ -3,29 +3,30 @@ message: If you use this software, please cite both the article from preferred-c
 authors:
   - family-names: Urizarna-Carasa
     given-names: Julio
-  - family-names: Schlegel
-    given-names: Leon
-  - family-names: Ruprecht
-    given-names: Daniel
-title: Efficient numerical methods for the Maxey-Riley-Gatignol equations with Basset history term
-version: 1.0.0
-url: https://www.sciencedirect.com/science/article/pii/S0010465525000050
-doi: https://doi.org/10.1016/j.cpc.2025.109502
-date-released: '2025-04-15'
+title: Basset-History-Term-Influence: v2.0 - Changed according to reviews
+version: 2.0
+url: https://doi.org/10.5281/zenodo.14252124
+doi: 10.5281/zenodo.14252124
+date-released: '2024-11-30'
 preferred-citation:
   type: article
   authors:
-  - family-names: Urizarna-Carasa
-    given-names: Julio
-  - family-names: Schlegel
-    given-names: Leon
-  - family-names: Ruprecht
-    given-names: Daniel
-  title: Efficient numerical methods for the Maxey-Riley-Gatignol equations with Basset history term
-  doi: https://doi.org/10.1016/j.cpc.2025.109502
-  url: https://www.sciencedirect.com/science/article/pii/S0010465525000050
-  type: article-journal
-  pages: '109502'
+    - family-names: Urizarna-Carasa
+      given-names: Julio
+    - family-names: Ruprecht
+      given-names: Daniel
+      orcid: 0000-0003-1904-2473
+    - family-names: von Kameke
+      given-names: Alexandra
+    - family-names: Padberg-Gehle
+      given-names: Kathrin
+    
+  title: Relevance of the Basset history term for Lagrangian particle dynamics
+  url: https://doi.org/10.1063/5.0225926
+  doi: 10.1063/5.0225926
+  journal: "Chaos"
+  volume: 35
+  pages: 073122
   year: '2025'
   conference: {}
   publisher: {}
