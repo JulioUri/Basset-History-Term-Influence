@@ -1,12 +1,12 @@
 # Code repository for the paper _Relevance of the Basset history term for Lagrangian particle dynamics_
 
-[![DOI](https://zenodo.org/badge/820629963.svg)](https://zenodo.org/doi/10.5281/zenodo.12557889)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14252124.svg)](https://doi.org/10.5281/zenodo.14252124)
 
-This repository contains the Python scripts implemented for the development of the paper _Relevance of the Basset history term for Lagrangian particle dynamics_.
+This repository contains the Python scripts that can regenerate all figures reported in the following publication:
 
-Here one can therefore find the scripts that generate the figures and tables in the following publication:
+> Urizarna-Carasa, L., Ruprecht, D., von Kameke, A., Padberg-Gehle, K.,  Relevance of the Basset history term for Lagrangian particle dynamics Free, Chaos (35), 073122, 2025.
 
-> _Urizarna-Carasa, L., Ruprecht, D., von Kameke, A., Padberg-Gehle, K., (2024), Relevance of the Basset history term for Lagrangian particle dynamics. To appear in Nonautonomous Dynamical Systems: theory, Methods, and Applications._
+The paper can be found [here](https://doi.org/10.1063/5.0225926) while the preprint can be found [here](https://arxiv.org/abs/2407.01041).
 
 For questions, contact either [M. Sc. Julio Urizarna](https://www.linkedin.com/in/julio-urizarna/) or [Prof. Dr. Daniel RUPRECHT](https://www.mat.tuhh.de/home/druprecht/?homepage_id=druprecht), or [Prof. Dr. Alexandra von Kameke](https://www.haw-hamburg.de/hochschule/beschaeftigte/detail/person/person/show/alexandra-von-kameke/) or [Prof. Dr. Kathrin Padberg-Gehle](https://www.leuphana.de/institute/imd/personen/kathrin-padberg-gehle.html).
 
